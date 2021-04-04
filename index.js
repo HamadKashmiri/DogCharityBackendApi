@@ -1,7 +1,8 @@
+const config = require('config');
 const Joi = require('joi');
 const express = require('express');
 const app = express();
-const morgan = require('morgan')
+const morgan = require('morgan');
 
 process.env.NODE_ENV
 
