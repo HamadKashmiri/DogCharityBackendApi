@@ -3,15 +3,20 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan')
 
+process.env.NODE_ENV
+
 app.use(express.json()); // req.body
 app.use(express.urlencoded({extended: true})); // parses incoming req with urlenc payloads
-app.use(morgan('tiny'));
+if (app.get('env') === "development") {
+  app.use(morgan('tiny'));
+}
 
 const dogs = [
   { id: 1, name: 'dog1' },  
   { id: 2, name: 'dog2' },  
   { id: 3, name: 'dog3' },  
 ];
+
 
 //GET all dogs
 app.get('/api/dogs', (req, res) => {
