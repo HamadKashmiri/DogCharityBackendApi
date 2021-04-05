@@ -6,10 +6,11 @@ const morgan = require('morgan');
 const dogs = require('./routes/dogs')
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://db:27017/rand')
+mongoose.connect('mongodb://localhost:27017/dogs', { useNewUrlParser: true })
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.error('MongoDB Connection Refused...', err.message))
 
+//schema for dog
 const dogSchema = new mongoose.Schema({
     name: String,
     breed: String,
@@ -24,10 +25,11 @@ const dogSchema = new mongoose.Schema({
 
 const Dog = mongoose.model("Dogs", dogSchema);
 
+//create new dog in db
 async function createDog(){
   
   const dog = new Dog({
-  name: "Bo",
+  name: "Bonew",
   breed: "Pitbull",
   traits: ["Loving", "Likes people"],
   description: "cba to type something long",
@@ -39,13 +41,20 @@ async function createDog(){
 
 const result = await dog.save();
 if (result) {
+  console.log("fetched dog");
   console.log(result);
 }
-
 }
-
 createDog()
 
+//get dogs
+async function getDogs() {
+  const dogs = await Dog.find()
+  console.log("All Dogs")
+  console.log(dogs)
+}
+
+getDogs()
 
 app.use(express.json()); // req.body
 app.use(express.urlencoded({extended: true})); // parses incoming req with urlenc payloads
