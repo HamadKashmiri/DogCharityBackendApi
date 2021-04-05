@@ -6,9 +6,9 @@ const morgan = require('morgan');
 const dogs = require('./routes/dogs')
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://africa-spider/dogsanctuary', { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://db:27017/rand')
   .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.error('MongoDB Connection Refused...'))
+  .catch(err => console.error('MongoDB Connection Refused...', err.message))
 
 const dogSchema = new mongoose.Schema({
     name: String,
@@ -38,7 +38,10 @@ async function createDog(){
 })
 
 const result = await dog.save();
-console.log(result);
+if (result) {
+  console.log(result);
+}
+
 }
 
 createDog()
