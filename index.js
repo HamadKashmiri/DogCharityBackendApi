@@ -6,9 +6,16 @@ const morgan = require('morgan');
 const dogs = require('./routes/dogs')
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/dogs', { useNewUrlParser: true })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.error('MongoDB Connection Refused...', err.message))
+const uri = 'mongodb+srv://hkhammer2:Hkhammer2.@cluster0.wjxer.mongodb.net/Database?retryWrites=true&w=majority'
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+const connection = mongoose.connection;
+connection.once('open', () => {
+    console.log("MongoDB database connection established successfully");
+})
+
+//mongoose.connect(dburi, { useNewUrlParser: true })
+//  .then(() => console.log('MongoDB Connected...'))
+ // .catch(err => console.error('MongoDB Connection Refused...', err.message))
 
 //schema for dog
 const dogSchema = new mongoose.Schema({
@@ -29,7 +36,7 @@ const Dog = mongoose.model("Dogs", dogSchema);
 async function createDog(){
   
   const dog = new Dog({
-  name: "Bonew",
+  name: "Bonew2",
   breed: "Pitbull",
   traits: ["Loving", "Likes people"],
   description: "cba to type something long",
@@ -45,7 +52,6 @@ if (result) {
   console.log(result);
 }
 }
-createDog()
 
 //get dogs
 async function getDogs() {
@@ -53,7 +59,7 @@ async function getDogs() {
   console.log("All Dogs")
   console.log(dogs)
 }
-
+createDog()
 getDogs()
 
 app.use(express.json()); // req.body
