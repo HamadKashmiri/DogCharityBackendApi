@@ -1,47 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi');
 const mongoose = require('mongoose');
-
-//schema for dog
-const dogSchema = new mongoose.Schema({
-    name: { type: String, 
-           required: true,
-           minlength: 3,
-           maxlength: 18
-          },
-  
-    breed: { type: String, 
-            required: true },
-  
-    traits: { type: [ String ],
-            validate: {
-              validator: function(value) {
-                return value.length > 0;
-                //ensures at least 1 trait
-              },
-              message: 'Dog requires a trait'
-            }},
-  
-    description: { type: String, 
-                  required: true },
-  
-    imageURL: { type: String },
-  
-    age: { type: Number, 
-          required: true },
-  
-    date: { type: Date, 
-           default: Date.now,
-          required: false},
-  
-    gender: { type: String, 
-             required: true },
-  
-    shelter: { type: String }
-})
-// Make Dog model
-const Dog = mongoose.model("Dogs", dogSchema);
+const { Dog, validateDog } = require('../models/dog')
+//object destructuring ^
 
 //GET all dogs
 router.get('/', async (req, res) => {
@@ -110,21 +71,6 @@ router.get('/:id', async (req, res) => {
   res.send(dog);
 });
 
-//validate with Joi
-function validateDog(dog) {
-  const schema = Joi.object({
-    name: Joi.string().min(3).max(18).required(),
-    breed: Joi.string().required(),
-    description: Joi.string().required(),
-    imageURL: Joi.string().required(),
-    age: Joi.number().required(),
-    traits: Joi.array().items(Joi.string()),
-    date: Joi.date(),
-    gender: Joi.string().required()
-  });
-
-  return schema.validate(dog);
-}
 
 module.exports = router;
 
