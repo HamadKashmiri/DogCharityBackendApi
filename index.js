@@ -45,7 +45,6 @@ async function createDog(){
   gender: "M",
   shelter: "London(replace with id)"
 })
-
 const result = await dog.save();
 if (result) {
   console.log("fetched dog");
@@ -59,9 +58,31 @@ async function getDogs() {
   console.log("All Dogs")
   console.log(dogs)
 }
-createDog()
-getDogs()
+async function getDogbyId(id) {
+  const dog = await Dog.findById(id)
+  if (!dog) return console.log("No Dog wih the current ID");
+  console.log("DogID: ", id)
+  console.log(dog)
+}
 
+//update dogs query based
+async function updateDog(id) {
+  const dog = await Dog.findById(id);
+  if (!dog) return console.log("No Dog with the ID");
+  dog.name = "BoneyUpdated"
+  await dog.save();
+  // alternatively dog.set({ name:something, breed: etc}} 
+}
+
+//update dogs query based
+async function removeDog(id) {
+  const dog = await Dog.deleteOne({_id: id});
+  console.log(dog)
+  // alternatively dog.set({ name:something, breed: etc}} 
+}
+
+removeDog("606bab6b3f5d71023ec0ac9c")
+getDogs()
 app.use(express.json()); // req.body
 app.use(express.urlencoded({extended: true})); // parses incoming req with urlenc payloads
 if (app.get('env') === "development") {
