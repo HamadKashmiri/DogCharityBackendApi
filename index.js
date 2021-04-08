@@ -3,8 +3,10 @@ const Joi = require('joi');
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
-const dogs = require('./routes/dogs')
-const mongoose = require('mongoose')
+const dogs = require('./routes/dogs');
+const favourites = require('./routes/favourites');
+const shelters = require('./routes/shelters');
+const mongoose = require('mongoose');
 
 const uri = 'mongodb+srv://hkhammer2:Hkhammer2.@cluster0.wjxer.mongodb.net/Database?retryWrites=true&w=majority'
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
@@ -22,7 +24,10 @@ app.use(express.urlencoded({extended: true})); // parses incoming req with urlen
 if (app.get('env') === "development") {
   app.use(morgan('tiny'));
 }
+
 app.use('/api/dogs', dogs);
+app.use('/api/favourites', favourites);
+app.use('/api/shelters', shelters);
 
 
 const port = process.env.PORT || 3000;
