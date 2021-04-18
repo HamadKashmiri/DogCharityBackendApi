@@ -34,12 +34,15 @@ router.post('/', async (req, res) => {
 
 //PUT - update 
 router.put('/:id', (req, res) => {
-  res.send("update");
+
 });
 
 //DELETE 
-router.delete('/:id', (req, res) => {
-  res.send("delete");
+router.delete('/:id', async (req, res) => {
+  const favourite = await Favourite.deleteOne({_id: req.params.id});
+  if (!favourite) return res.status(404).send('The Favourite with the given ID was not found.');
+  console.log("Deleted Favourite")
+  res.send(favourite);
 });
 
 //GET single 
