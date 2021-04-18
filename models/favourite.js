@@ -8,6 +8,10 @@ const favouriteSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Dogs'
   },
+  userID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  },
   //userID: {
   //  type: mongoose.Schema.Types.ObjectId,
   //  ref: 'Users'
@@ -23,7 +27,7 @@ const Favourite = mongoose.model("Favourites", favouriteSchema);
 function validateFavourite(favourite) {
   const schema = Joi.object({
     dogID: Joi.objectId().required(),
-    //userID: Joi.objectId().required(),
+    userID: Joi.objectId().required(),
     date: Joi.date(),    
   });
 

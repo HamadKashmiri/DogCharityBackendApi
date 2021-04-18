@@ -7,7 +7,7 @@ const { Favourite, validateFavourite } = require('../models/favourite');
 
 //GET all 
 router.get('/', async (req, res) => {
-  const favourites = await Favourite.find().populate('dogID');
+  const favourites = await Favourite.find().populate('dogID').populate('userID');
   console.log("All Favourites");
   res.send(favourites);
 });
@@ -19,8 +19,8 @@ router.post('/', async (req, res) => {
   const { error } = validateFavourite(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   let favourite = new Favourite({
-  dogID: req.body.dogID
-  //userID: req.body.dogID
+  dogID: req.body.dogID,
+  userID: req.body.userID
    //userID
 })
    try {
