@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { Favourite, validateFavourite } = require('../models/favourite')
+const { Favourite, validateFavourite } = require('../models/favourite');
+
 //object destructuring ^
 
 //GET all 
 router.get('/', async (req, res) => {
-  const favourites = await Favourite.find();
+  const favourites = await Favourite.find().populate('dogID');
   console.log("All Favourites");
   res.send(favourites);
 });
@@ -16,7 +17,8 @@ router.post('/', async (req, res) => {
   const { error } = validateFavourite(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   let favourite = new Favourite({
-  //dogId
+  dogID: req.body.dogID
+  //userID: req.body.dogID
    //userID
 })
    try {
