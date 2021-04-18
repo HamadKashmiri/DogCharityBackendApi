@@ -3,7 +3,9 @@ const Joi = require('joi');
 
 //schema for favourite
 const favouriteSchema = new mongoose.Schema({
-  //dogID
+  dogID: {
+    
+  }
   //userID
   date: { type: Date, 
           default: Date.now}

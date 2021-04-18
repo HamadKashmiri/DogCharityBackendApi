@@ -5,13 +5,29 @@ const { Favourite, validateFavourite } = require('../models/favourite')
 //object destructuring ^
 
 //GET all 
-router.get('/', (req, res) => {
-  res.send("get all");
+router.get('/', async (req, res) => {
+  const favourites = await Favourite.find();
+  console.log("All Favourites");
+  res.send(favourites);
 });
 
 //POST new 
-router.post('/', (req, res) => {
-  res.send("post");
+router.post('/', async (req, res) => {
+  const { error } = validateFavourite(req.body); 
+  if (error) return res.status(400).send(error.details[0].message);
+  let favourite = new Favourite({
+  //dogId
+   //userID
+})
+   try {
+    favourite = await favourite.save();
+    if (favourite) {
+      console.log("Favourite has been added");
+      res.send(favourite);
+    }   
+  }catch (err) {
+    console.log(err.message);
+  }
 });
 
 //PUT - update 
