@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi)
 
 //schema for dog
 const dogSchema = new mongoose.Schema({
@@ -36,7 +37,8 @@ const dogSchema = new mongoose.Schema({
     gender: { type: String, 
              required: true },
   
-    shelter: { type: String }
+    shelterID: { type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shelters' }
 })
 // Make Dog model
 const Dog = mongoose.model("Dogs", dogSchema);
@@ -51,7 +53,8 @@ function validateDog(dog) {
     age: Joi.number().required(),
     traits: Joi.array().items(Joi.string()),
     date: Joi.date(),
-    gender: Joi.string().required()
+    gender: Joi.string().required(),
+    shelterID: Joi.objectId()
   });
 
   return schema.validate(dog);

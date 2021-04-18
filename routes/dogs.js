@@ -6,9 +6,8 @@ const { Dog, validateDog } = require('../models/dog')
 
 //GET all dogs
 router.get('/', async (req, res) => {
-  const dogs = await Dog.find().sort('date');
+  const dogs = await Dog.find().sort('date').populate('shelterID');
   console.log("All Dogs");
-  console.log(dogs);
   res.send(dogs);
 });
 
@@ -23,13 +22,12 @@ router.post('/', async (req, res) => {
   description: req.body.description,
   age: req.body.age,
   gender: req.body.gender,
-  //shelter: req.body.shelter
+  shelterID: req.body.shelterID
 })
    try {
     dog = await dog.save();
     if (dog) {
       console.log("New dog");
-      console.log(dog);
       res.send(dog);
     }   
   }catch (err) {
