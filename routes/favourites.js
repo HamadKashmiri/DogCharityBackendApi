@@ -12,6 +12,8 @@ router.get('/', async (req, res) => {
   res.send(favourites);
 });
 
+// need to get all with the given userID
+
 //POST new 
 router.post('/', async (req, res) => {
   const { error } = validateFavourite(req.body); 

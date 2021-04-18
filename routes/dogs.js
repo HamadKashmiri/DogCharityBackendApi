@@ -11,6 +11,8 @@ router.get('/', async (req, res) => {
   res.send(dogs);
 });
 
+//get all dogs from a specific shelter
+
 //POST new dog
 router.post('/', async (req, res) => {
   const { error } = validateDog(req.body); 
