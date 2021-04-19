@@ -1,3 +1,4 @@
 {
-  "name": "custom-env-vars"
+  "name": "custom-env-vars",
+  "jwtPrivateKey": "dogsPrivateKey"
 }

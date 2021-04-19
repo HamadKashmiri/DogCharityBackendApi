@@ -11,6 +11,10 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const mongoose = require('mongoose');
 
+if(!config.get('jwtPrivateKey')) {
+  console.log('no jwt key');
+  process.exit(1);
+}
 
 const uri = 'mongodb+srv://hkhammer2:Hkhammer2.@cluster0.wjxer.mongodb.net/Database?retryWrites=true&w=majority'
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
@@ -33,7 +37,7 @@ app.use('/api/dogs', dogs);
 app.use('/api/favourites', favourites);
 app.use('/api/shelters', shelters);
 app.use('/api/users', users);
-app.use('/api/auth',auth);
+app.use('/api/auth', auth);
 
 
 const port = process.env.PORT || 3000;

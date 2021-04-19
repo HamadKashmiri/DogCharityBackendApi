@@ -1,10 +1,11 @@
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
 const { User } = require('../models/user');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
-//const asyncMiddleware = require('../middleware/async');
+const config = require('config');
 
 //utility module to make code look cleaner
 
@@ -21,9 +22,9 @@ router.post('/', async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password)
     //compares hasshed with req password hashed with salt from user password
     if (!isPasswordCorrect) return res.status(400).send("Invalid email or password, please try again");
-
-    //const token = user.generateAuthToken();
-    res.send(user)
+    // pass id as payload for token
+    const jwToken = jwt.sign({_id: user._id}, config.get('jwtPrivateKey'));
+    res.send(jwToken)
 
 });
 

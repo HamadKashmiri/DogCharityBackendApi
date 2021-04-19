@@ -1,3 +1,4 @@
 {
-  "name": "dogsAPI Dev"
+  "name": "dogsAPI Dev",
+  "jwtPrivateKey": "dogsPrivateKey"
 }
