@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const { User, validateUser } = require('../models/user');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 
 //GET all 
 router.get('/', async (req, res) => {
@@ -31,7 +33,9 @@ router.post('/', async (req, res) => {
     user = await user.save();
     if (user) {
       console.log("New User");
-      res.send(user);
+      const jwToken = jwt.sign({_id: user._id}, config.get('jwtPrivateKey'));
+      // send jwt as a header and send user in the body using lodash to not send the pass
+      res.header('x-jwtoken', jwToken).send(_.pick(user, ['name', 'email']));
     }   
   }catch (err) {
     console.log(err.message);

@@ -1,3 +1,4 @@
+/* auth based on (expanded and modified) from Mosh Hamedani https://github.com/mosh-hamedani/vidly-api-node/blob/master/routes/auth.js */
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
