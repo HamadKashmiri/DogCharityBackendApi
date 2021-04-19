@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const userAuth = require('../middleware/authMiddleware');
 const mongoose = require('mongoose');
-const { Dog, validateDog } = require('../models/dog')
+const { Dog, validateDog } = require('../models/dog');
 //object destructuring ^
 const _ = require('lodash');
 
@@ -15,7 +16,8 @@ router.get('/', async (req, res) => {
 //get all dogs from a specific shelter
 
 //POST new dog
-router.post('/', async (req, res) => {
+router.post('/', userAuth, async (req, res) => {
+  
   const { error } = validateDog(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   // lodash saves 6 lines of code
@@ -32,7 +34,7 @@ router.post('/', async (req, res) => {
 });
 
 //PUT - update a dog
-router.put('/:id', async (req, res) => {
+router.put('/:id', userAuth, async (req, res) => {
   // validation with Joi first from client 
   const { error } = validateDog(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
@@ -50,7 +52,7 @@ router.put('/:id', async (req, res) => {
 });
 
 //DELETE a dog
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', userAuth, async (req, res) => {
   const dog = await Dog.deleteOne({_id: req.params.id});
   if (!dog) return res.status(404).send('The Dog with the given ID was not found.');
   console.log("Deleted Dog")

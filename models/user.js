@@ -26,10 +26,8 @@ const userSchema = new mongoose.Schema({
        // default?
     }
       //roles
+});
 
-
-
-})
 // Make Favourite model
 const User = mongoose.model("Users", userSchema);
 
