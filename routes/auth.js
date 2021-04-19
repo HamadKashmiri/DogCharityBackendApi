@@ -8,8 +8,8 @@ const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
 const config = require('config');
 
-//utility module to make code look cleaner
 
+//POST login user
 router.post('/', async (req, res) => {
     const { error } = validateAuth(req.body); // equivalent to getting result.error directly, rather than the above line
     //if invalid, return bad request
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     //compares hasshed with req password hashed with salt from user password
     if (!isPasswordCorrect) return res.status(400).send("Invalid email or password, please try again");
     // pass id as payload for token
-    const jwToken = jwt.sign({_id: user._id}, config.get('jwtPrivateKey'));
+    const jwToken = jwt.sign({_id: user._id, role: user.role }, config.get('jwtPrivateKey'));
     res.send(jwToken)
 
 });

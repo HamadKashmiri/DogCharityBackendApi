@@ -24,8 +24,12 @@ const userSchema = new mongoose.Schema({
     signUpCode: {
       type: String,
        // default?
+    },
+    role: {
+      type: String,
+      required: false
     }
-      //roles
+      
 });
 
 // Make Favourite model
@@ -42,7 +46,7 @@ function validateUser(user) {
                                     upperCase: 1,
                                     symbol: 1,
                                     requirementCount: 2}),
-    signUpCode: Joi.string()
+    signUpCode: Joi.string(),
   
   });
 

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const userAuth = require('../middleware/authMiddleware');
+const adminAuth = require('../middleware/adminAuth');
 const { Shelter, validateShelter } = require('../models/shelter')
 //object destructuring ^
 const _ = require('lodash');
@@ -14,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 //POST new 
-router.post('/', userAuth, async (req, res) => {
+router.post('/', [userAuth, adminAuth], async (req, res) => {
   const { error } = validateShelter(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   let shelter = new Shelter({
@@ -39,7 +40,7 @@ router.post('/', userAuth, async (req, res) => {
 // });
 
 //DELETE 
-router.delete('/:id', userAuth, async (req, res) => {
+router.delete('/:id', [userAuth, adminAuth], async (req, res) => {
   const shelter = await Shelter.deleteOne({_id: req.params.id});
   if (!shelter) return res.status(404).send('The Shelter with the given ID was not found.');
   console.log("Deleted Shelter")
