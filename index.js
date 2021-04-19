@@ -1,4 +1,4 @@
-//code layout inspired by https://github.com/mosh-hamedani/vidly-api-node
+//File layout inspired by https://github.com/mosh-hamedani/vidly-api-node (only layout design is only used, code  changed, expanded and unique)
 const express = require('express');
 const app = express();
 
