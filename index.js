@@ -8,6 +8,7 @@ const dogs = require('./routes/dogs');
 const favourites = require('./routes/favourites');
 const shelters = require('./routes/shelters');
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 const mongoose = require('mongoose');
 
 
@@ -32,6 +33,7 @@ app.use('/api/dogs', dogs);
 app.use('/api/favourites', favourites);
 app.use('/api/shelters', shelters);
 app.use('/api/users', users);
+app.use('/api/auth',auth);
 
 
 const port = process.env.PORT || 3000;

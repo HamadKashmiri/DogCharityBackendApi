@@ -43,7 +43,7 @@ function validateUser(user) {
                                     lowerCase: 1,
                                     upperCase: 1,
                                     symbol: 1,
-                                    requirementCount: 2,}),
+                                    requirementCount: 2}),
     signUpCode: Joi.string()
   
   });
