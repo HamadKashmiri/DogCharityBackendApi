@@ -1,3 +1,4 @@
+require('express-async-errors');
 const config = require('config');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi)
@@ -10,6 +11,8 @@ const shelters = require('./routes/shelters');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const mongoose = require('mongoose');
+const winston = require('winston');
+const error = require('./middleware/errorMiddleware');
 
 if(!config.get('jwtPrivateKey')) {
   console.log('no jwt key');
@@ -22,6 +25,7 @@ const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
+
 
 //mongoose.connect(dburi, { useNewUrlParser: true })
 //  .then(() => console.log('MongoDB Connected...'))
@@ -39,6 +43,7 @@ app.use('/api/shelters', shelters);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
+app.use(error);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
