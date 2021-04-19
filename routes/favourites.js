@@ -21,8 +21,7 @@ router.post('/', async (req, res) => {
   let favourite = new Favourite({
   dogID: req.body.dogID,
   userID: req.body.userID
-   //userID
-})
+});
    try {
     favourite = await favourite.save();
     if (favourite) {

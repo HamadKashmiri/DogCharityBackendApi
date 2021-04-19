@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
     },
     signUpCode: {
       type: String,
-      default: 
+       // default?
     }
       //roles
 

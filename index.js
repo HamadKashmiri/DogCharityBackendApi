@@ -7,7 +7,9 @@ const morgan = require('morgan');
 const dogs = require('./routes/dogs');
 const favourites = require('./routes/favourites');
 const shelters = require('./routes/shelters');
+const users = require('./routes/users');
 const mongoose = require('mongoose');
+
 
 const uri = 'mongodb+srv://hkhammer2:Hkhammer2.@cluster0.wjxer.mongodb.net/Database?retryWrites=true&w=majority'
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
@@ -29,6 +31,7 @@ if (app.get('env') === "development") {
 app.use('/api/dogs', dogs);
 app.use('/api/favourites', favourites);
 app.use('/api/shelters', shelters);
+app.use('/api/users', users);
 
 
 const port = process.env.PORT || 3000;

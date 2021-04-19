@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { Dog, validateDog } = require('../models/dog')
 //object destructuring ^
+const _ = require('lodash');
 
 //GET all dogs
 router.get('/', async (req, res) => {
@@ -17,15 +18,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { error } = validateDog(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
-  let dog = new Dog({
-  name: req.body.name,
-  breed: req.body.breed,
-  traits: req.body.traits,
-  description: req.body.description,
-  age: req.body.age,
-  gender: req.body.gender,
-  shelterID: req.body.shelterID
-})
+  // lodash saves 6 lines of code
+  dog = new Dog(_.pick(req.body, ['name', 'breed', 'traits', 'description', 'age', 'gender', 'shelterID']));
    try {
     dog = await dog.save();
     if (dog) {

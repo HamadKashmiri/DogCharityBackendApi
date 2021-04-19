@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { Shelter, validateShelter } = require('../models/shelter')
 //object destructuring ^
+const _ = require('lodash');
 
 //GET all 
 router.get('/', async (req, res) => {
@@ -19,6 +20,7 @@ router.post('/', async (req, res) => {
   name: req.body.name,
   address: req.body.address,
   contactNo: req.body.contactNo})
+  shelter = new Shelter(_.pick(req.body, ['name', 'address', 'contactNo']));
   try {
     shelter = await shelter.save();
     if (shelter) {
