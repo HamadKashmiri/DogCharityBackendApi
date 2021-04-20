@@ -4,6 +4,17 @@ const userAuth = require('../middleware/authMiddleware');
 const workerAuth = require('../middleware/workerAuth');
 const mongoose = require('mongoose');
 const { Dog, validateDog } = require('../models/dog');
+
+var Twit = require('twit')
+ 
+var T = new Twit({
+  consumer_key:         '8lccxlmM5D0bu5OIVhFmnLDCN',
+  consumer_secret:      '9SCAraNMjCy94pxQdJ0SK7RtcUgUeyU2ZuqgVLwlAKBM3oXyBm',
+  access_token:         '1384619180415143943-wAF2U6yQ5DjnNu2IwjaDeF6OfCCdDK',
+  access_token_secret:  '479VXvVOdCqPW92saZ4ZR1tGKDvz5h4UfEytsozOhwyy7',
+
+})
+ 
 //object destructuring ^
 const _ = require('lodash');
 
@@ -27,6 +38,9 @@ router.post('/', [userAuth, workerAuth], async (req, res) => {
     dog = await dog.save();
     if (dog) {
       console.log("New dog");
+      T.post('statuses/update', { status: 'Check out our new Dog: ' + dog.name }, function(err, data, response) {
+      console.log(data)
+});
       res.send(dog);
     }   
   }catch (err) {
