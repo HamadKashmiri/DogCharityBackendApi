@@ -1,4 +1,5 @@
 {
   "name": "dogsAPI Dev",
-  "jwtPrivateKey": "dogsPrivateKey"
+  "jwtPrivateKey": "dogsPrivateKey",
+  "dbUri": "mongodb+srv://hkhammer2:Hkhammer2.@cluster0.wjxer.mongodb.net/Database?retryWrites=true&w=majority"
 }

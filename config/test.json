@@ -1,0 +1,5 @@
+{
+  "name": "dogsAPI Test",
+  "jwtPrivateKey": "dogsPrivateKey",
+  "dbUri": "mongodb+srv://hkhammer2:Hkhammer2.@cluster0.wjxer.mongodb.net/Tests?retryWrites=true&w=majority"
+}
