@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 const passwordComplexity = require("joi-password-complexity");
+const config = require('config');
+const jwt = require('jsonwebtoken');
 
 //schema for favourite
 const userSchema = new mongoose.Schema({
@@ -32,7 +34,13 @@ const userSchema = new mongoose.Schema({
       
 });
 
-// Make Favourite model
+userSchema.methods.getToken = function() {
+    //json web token created using id, with private key as 2nd argument 
+    const jwToken = jwt.sign({ _id: this._id, role: this.role }, config.get('jwtPrivateKey'));
+    return jwToken;
+}
+
+// Make User model
 const User = mongoose.model("Users", userSchema);
 
 //validate with Joi

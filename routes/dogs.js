@@ -5,6 +5,7 @@ const workerAuth = require('../middleware/workerAuth');
 const mongoose = require('mongoose');
 const { Dog, validateDog } = require('../models/dog');
 
+// should probably move this to its own module and put the vars to environment vars
 var Twit = require('twit')
  
 var T = new Twit({
@@ -38,9 +39,7 @@ router.post('/', [userAuth, workerAuth], async (req, res) => {
     dog = await dog.save();
     if (dog) {
       console.log("New dog");
-      T.post('statuses/update', { status: 'Check out our new Dog: ' + dog.name }, function(err, data, response) {
-      console.log(data)
-});
+      T.post('statuses/update', { status: 'Check out our new Dog: ' + dog.name }, function(err, data, response) {});
       res.send(dog);
     }   
   }catch (err) {
