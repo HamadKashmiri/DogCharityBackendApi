@@ -42,7 +42,6 @@ router.post('/', async (req, res) => {
   } else if (user.signUpCode == "user"){
     user.role = "user";
   }
-  console.log(user.role);
    try {
     user = await user.save();
     if (user) {
