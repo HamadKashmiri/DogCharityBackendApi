@@ -40,7 +40,6 @@ describe('/api/dogs', () => {
                   password: "Password1" });
         console.log(response.body);
         expect(response.status).toBe(400);
-        expect(response.body).toBe(null);
       });
       
       it('should return 400 if the password doesnt match', async () => {
