@@ -45,7 +45,6 @@ router.post('/', async (req, res) => {
    try {
     user = await user.save();
     if (user) {
-      console.log("New User");
       const jwToken = jwt.sign({_id: user._id, role: user.role }, config.get('jwtPrivateKey'));
       // send jwt as a header and send user in the body using lodash to not send the pass
       res.header('x-jwtoken', jwToken).send(_.pick(user, ['name', 'email']));
