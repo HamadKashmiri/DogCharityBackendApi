@@ -4,6 +4,7 @@ let server;
 const { Dog } = require('../../models/dog');
 const { User } = require('../../models/user');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 // vars
 testDog = { name: "dog",
@@ -55,7 +56,6 @@ describe('/api/dogs', () => {
          const jwToken = user.getToken();
          const dog = new Dog(testDog);
          await dog.save();
-         console.log(dog.id);
          const result = await request(server)
            .get('/api/dogs/' + dog.id)
            .set('x-jwtoken', jwToken);
@@ -123,6 +123,16 @@ describe('/api/dogs', () => {
 
   //PUT
     describe('PUT /', () => {
+
+      it('should return 401 if unauthorized not logged in', async () => {
+        const dog = new Dog(testDog);
+        await dog.save();
+        const response = await request(server)
+          .put('/api/dogs/' + dog.id)
+          .send({ name: 'dog1' });
+        expect(response.status).toBe(401);
+      });
+      
       it('should save dog & return 200 if the dog is valid', async () => {
         const user = new User({ role: "worker" })
         const jwToken = user.getToken();
@@ -138,7 +148,7 @@ describe('/api/dogs', () => {
         expect(updatedDog).not.toBe(null);
       });
       
-      it('should return 401 if the dog is invalid', async () => {
+      it('should return 400 if the dog is invalid', async () => {
         const user = new User({ role: "worker" })
         const jwToken = user.getToken();
         const dog = new Dog(testDog);
@@ -157,6 +167,16 @@ describe('/api/dogs', () => {
 
   //DELETE
     describe('Delete /:id', () => {
+      
+      it('should return 401 if unauthorized not logged in', async () => {
+        const dog = new Dog(testDog);
+        await dog.save();
+        const response = await request(server)
+          .delete('/api/dogs/' + dog.id)
+          .send({ name: 'dog1' });
+        expect(response.status).toBe(401);
+      });
+      
       it('should delete a valid dog & return 200', async () => {
         const dog = new Dog(testDog);
         await dog.save();
@@ -167,5 +187,15 @@ describe('/api/dogs', () => {
           .set('x-jwtoken', jwToken); // set header       
         expect(response.status).toBe(200);
       });
+      
+      it('should return 403 if the user is not worker', async () => {
+         const id = mongoose.Types.ObjectId();
+         const user = new User({ role: "user" })
+         const jwToken = user.getToken();
+         const response = await request(server)
+           .delete('/api/dogs/' + id)
+           .set('x-jwtoken', jwToken) // set header  
+         expect(response.status).toBe(403);
+       });
     });
 });

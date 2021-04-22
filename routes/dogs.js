@@ -22,7 +22,6 @@ const _ = require('lodash');
 //GET all dogs
 router.get('/', async (req, res) => {
   const dogs = await Dog.find().sort('date').populate('shelterID');
-  console.log("All Dogs");
   res.send(dogs);
 });
 
@@ -38,7 +37,6 @@ router.post('/', [userAuth, workerAuth], async (req, res) => {
    try {
     dog = await dog.save();
     if (dog) {
-      console.log("New dog");
       T.post('statuses/update', { status: 'Check out our new Dog: ' + dog.name }, function(err, data, response) {});
       res.send(dog);
     }   
@@ -69,8 +67,6 @@ router.put('/:id', [userAuth, workerAuth], async (req, res) => {
 router.delete('/:id', [userAuth, workerAuth], async (req, res) => {
   const dog = await Dog.deleteOne({_id: req.params.id});
   if (!dog) return res.status(404).send('The Dog with the given ID was not found.');
-  console.log("Deleted Dog")
-  console.log(dog)
   res.send(dog);
 });
 

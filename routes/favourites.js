@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const userAuth = require('../middleware/authMiddleware');
+
 const { Favourite, validateFavourite } = require('../models/favourite');
 
 //object destructuring ^
@@ -26,7 +27,6 @@ router.post('/', userAuth, async (req, res) => {
    try {
     favourite = await favourite.save();
     if (favourite) {
-      console.log("Favourite has been added");
       res.send(favourite);
     }   
   }catch (err) {
