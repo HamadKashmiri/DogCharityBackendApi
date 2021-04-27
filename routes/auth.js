@@ -29,6 +29,25 @@ router.post('/', async (req, res) => {
 
 });
 
+//validate token if logged in
+router.get('/loggedIn', async (req, res) => {
+  
+      const jwToken = req.header('x-jwtoken');
+      //401 is unauthenticated
+      if (!jwToken) return res.json(false);
+
+      try {
+          const verified = jwt.verify(jwToken, config.get('jwtPrivateKey'));
+          res.json(true);
+      }
+
+      catch (ex) {
+          //400 
+          res.json(false);
+      }
+
+})
+
 function validateAuth(user) {
   const schema = Joi.object({
     email: Joi.string().min(5).max(255).email(),
