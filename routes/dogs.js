@@ -43,7 +43,7 @@ router.post('/', [userAuth, workerAuth], async (req, res) => {
   const { error } = validateDog(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   // lodash saves 6 lines of code
-  dog = new Dog(_.pick(req.body, ['name', 'breed', 'traits', 'description', 'age', 'gender', 'shelterID']));
+  dog = new Dog(_.pick(req.body, ['name', 'breed', 'description', 'imageURL', 'age', 'gender']));
    try {
     dog = await dog.save();
     if (dog) {

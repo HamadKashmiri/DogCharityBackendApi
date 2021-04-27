@@ -14,6 +14,7 @@ const dogSchema = new mongoose.Schema({
             required: true },
   
     traits: { type: [ String ],
+             default: ['default'],
             validate: {
               validator: function(value) {
                 return value.length >= 0;
@@ -25,7 +26,8 @@ const dogSchema = new mongoose.Schema({
     description: { type: String, 
                   required: true },
   
-    imageURL: { type: String },
+    imageURL: { type: String,
+              required: true},
   
     age: { type: Number, 
           required: true },
