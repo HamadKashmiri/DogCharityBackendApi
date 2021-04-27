@@ -27,7 +27,7 @@ const Favourite = mongoose.model("Favourites", favouriteSchema);
 function validateFavourite(favourite) {
   const schema = Joi.object({
     dogID: Joi.objectId().required(),
-    userID: Joi.objectId().required(),
+    userID: Joi.objectId(),
     date: Joi.date(),    
   });
 
