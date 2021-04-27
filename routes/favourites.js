@@ -9,7 +9,6 @@ const { Favourite, validateFavourite } = require('../models/favourite');
 
 //GET all 
 router.get('/', userAuth, async (req, res) => {
-    console.log(req.user._id);
   const favourites = await Favourite.find({userID: req.user._id}).populate('dogID').populate('userID');
   console.log("All Favourites");
   res.send(favourites);

@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const passwordComplexity = require('joi-password-complexity');
 const config = require('config');
+var cookies = require("cookie-parser");
 
 
 //POST login user
@@ -25,14 +26,16 @@ router.post('/', async (req, res) => {
     if (!isPasswordCorrect) return res.status(400).send("Invalid email or password, please try again");
     // pass id as payload for token
     const jwToken = jwt.sign({_id: user._id, role: user.role }, config.get('jwtPrivateKey'));
-    res.send(jwToken)
+    res.json(jwToken)
 
 });
 
 //validate token if logged in
 router.get('/loggedIn', async (req, res) => {
-  
+      
+      
       const jwToken = req.header('x-jwtoken');
+      console.log(jwToken);
       //401 is unauthenticated
       if (!jwToken) return res.json(false);
 
