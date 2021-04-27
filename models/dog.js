@@ -16,7 +16,7 @@ const dogSchema = new mongoose.Schema({
     traits: { type: [ String ],
             validate: {
               validator: function(value) {
-                return value.length > 0;
+                return value.length >= 0;
                 //ensures at least 1 trait
               },
               message: 'Dog requires a trait'

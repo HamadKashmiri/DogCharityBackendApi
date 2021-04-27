@@ -7,14 +7,16 @@ const users = require('../routes/users');
 const auth = require('../routes/auth');
 const error = require('../middleware/errorMiddleware');
 const morgan = require('morgan');
+const cors = require('cors');
 
 function routes(app) {
-  
+    
     app.use(express.json()); // req.body
     app.use(express.urlencoded({extended: true})); // parses incoming req with urlenc payloads
     if (app.get('env') === "development") {
       app.use(morgan('tiny'));
     };
+    app.use(cors());
 
     app.use('/api/dogs', dogs);
     app.use('/api/favourites', favourites);

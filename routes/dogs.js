@@ -25,6 +25,16 @@ router.get('/', async (req, res) => {
   res.send(dogs);
 });
 
+//GET all by search
+router.get('/search', async (req, res) => {
+  const query = req.query.breed;
+  let dogs = await Dog.find({breed:{$regex: query, $options: '$i'}});
+  res.send(dogs)                        
+
+
+
+});
+
 //get all dogs from a specific shelter
 
 //POST new dog
@@ -81,7 +91,7 @@ router.get('/:id', userAuth, async (req, res) => {
 module.exports = router;
 
 /*{
-	"name":"bastard",
+	"name":"asds",
 	"breed": "newdog",
 	"description": "new desc",
 	"imageURL": "new Url",

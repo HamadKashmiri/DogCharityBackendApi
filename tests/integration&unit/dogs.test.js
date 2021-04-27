@@ -119,11 +119,11 @@ describe('/api/dogs', () => {
         expect(response.body).toHaveProperty('name', testDog.name);
       });
     });
- 
-
+  
+   
   //PUT
     describe('PUT /', () => {
-
+    
       it('should return 401 if unauthorized not logged in', async () => {
         const dog = new Dog(testDog);
         await dog.save();
@@ -164,7 +164,7 @@ describe('/api/dogs', () => {
       
 
     });
-
+  
   //DELETE
     describe('Delete /:id', () => {
       

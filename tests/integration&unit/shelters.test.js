@@ -11,7 +11,7 @@ testShelter = {
   address: "testAddress",
   contactNo: 10
 }
-describe('/api/dogs', () => {
+describe('/api/shelters', () => {
    // call below method before each test inside the suite
    //server already runs on 3000 from deve env, so need to open and close server between tests
    beforeEach(() => { server = require('../../index'); })
