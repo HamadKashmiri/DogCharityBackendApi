@@ -62,7 +62,8 @@ router.put('/:id', [userAuth, workerAuth], async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
   const dog = await Dog.findByIdAndUpdate(req.params.id, { name: req.body.name, 
                                                           breed: req.body.breed, 
-                                                          traits: req.body.traits, 
+                                                          gender: req.body.gender,
+                                                          imageURL: req.body.imageURL,
                                                           description: req.body.description, 
                                                           age: req.body.age }, { new: true});
   if (!dog) return res.status(404).send('The Dog with the given ID was not found.');
