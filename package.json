@@ -1,10 +1,10 @@
 {
-  "name": "BackendAPI",
+  "name": "coursework-submission",
   "version": "1.0.0",
   "description": "304cem Backend Description",
   "main": "index.js",
   "scripts": {
-    "test": "jest --testEnvironment=node --watchAll --verbose --runInBand --coverage",
+    "test": "jest --testEnvironment=node --watchAll --verbose --runInBand",
     "doc": "jsdoc -c jsdoc.conf.json"
   },
   "repository": {
