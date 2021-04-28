@@ -9,6 +9,9 @@ const error = require('../middleware/errorMiddleware');
 const morgan = require('morgan');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+
+
+
 function routes(app) {
     
     app.use(express.json()); // req.body
@@ -27,6 +30,7 @@ function routes(app) {
     app.use('/api/shelters', shelters);
     app.use('/api/users', users);
     app.use('/api/auth', auth);
+    
 
     app.use(error);
 

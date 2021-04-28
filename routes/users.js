@@ -7,12 +7,87 @@ const bcrypt = require('bcrypt');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const userAuth = require('../middleware/authMiddleware');
+
+/**
+* @swagger
+* components:
+*   schemas:
+*     User:
+*       type: object
+*       required:
+*         - name
+*         - email
+*         - password
+*       properties:
+*         name:
+*           type: string
+*           description: name of the user
+*         email:
+*           type: string
+*           description: email of the user
+*         password:
+*           type: string
+*           description: password for the user
+*         signUpCode: 
+*           type: string
+*           description: sign up code with which users can register
+*         role:
+*           type: string
+*           description: role which is assigned based on sign up code
+*           required: false
+*         _id:
+*           type: string
+*           description: main id for each user
+*/
+
+/**
+* @swagger
+* tags:
+*   name: Users
+*   description: The Users API
+*/
+ 
+
+/**
+* @swagger
+* /api/users:
+*   get:
+*     tags: [Users]
+*     description: get all users  
+*     responses:
+*       '200':
+*         description: Success
+*/
+
 //GET all 
 router.get('/', async (req, res) => {
   const users = await User.find();
   console.log("All Users");
   res.send(users);
 });
+
+/**
+* @swagger
+* /api/users:
+*   post: 
+*     tags: [Users]
+*     description: post / register a new user
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/Schemas/User' 
+*     responses:
+*        200:
+*         description: Success
+*         content: 
+*           application/json:
+*             schema:
+*               $ref: '#/components/Schemas/User' 
+*        400:
+*         description: bad sign up code or validation failed 
+*/
 
 //POST new user
 router.post('/', async (req, res) => {
@@ -53,6 +128,29 @@ router.post('/', async (req, res) => {
     console.log(err.message);
   }
 });
+
+/**
+* @swagger
+* /api/users/user:
+*   get:
+*     parameters:
+*     - name: x-jwtoken
+*       in: header
+*       description: an authorization header
+*       required: true
+*       type: string     
+*     tags: [Users]
+*     description: get the logged in user
+*     responses:
+*       '200':
+*         description: Success
+*       '401':
+*         description: unauthorized - no token 
+*       '400':
+*         description: Token Invalid 
+*       '404':
+*         description: User not found
+*/
 
 //GET logged in user( no id for security )
 router.get('/user', userAuth, async (req, res) => {

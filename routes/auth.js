@@ -9,6 +9,33 @@ const passwordComplexity = require('joi-password-complexity');
 const config = require('config');
 var cookies = require("cookie-parser");
 
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: The Authentication API
+ */
+ 
+/**
+* @swagger
+* /api/auth:
+*   post: 
+*     tags: [Auth]
+*     description: post a new login request
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/Schemas/User' 
+*     responses:
+*        200:
+*         description: Success 
+*        401:
+*         description: unauthorized - no token 
+*        400:
+*         description: Token Invalid or details invalid
+*/
 
 //POST login user
 router.post('/', async (req, res) => {
@@ -29,6 +56,27 @@ router.post('/', async (req, res) => {
     res.json(jwToken)
 
 });
+
+/**
+* @swagger
+* /api/auth/loggedIn:
+*   get:
+*     parameters:
+*     - name: x-jwtoken
+*       in: header
+*       description: an authorization header
+*       required: true
+*       type: string     
+*     tags: [Auth]
+*     description: checks if user is logged in 
+*     responses:
+*       '200':
+*         description: Success
+*       '401':
+*         description: unauthorized - no token 
+*       '400':
+*         description: Token Invalid 
+*/
 
 //validate token if logged in
 router.get('/loggedIn', async (req, res) => {
