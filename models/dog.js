@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+/**
 
+* @class dog
+
+* @param {object} schema - contains properties of dog
+
+*/
 
 //schema for dog
 const dogSchema = new mongoose.Schema({
@@ -44,6 +50,16 @@ const dogSchema = new mongoose.Schema({
 })
 // Make Dog model
 const Dog = mongoose.model("Dogs", dogSchema);
+
+/**
+
+* @function dog validation
+
+* @param {object} dog - passed user object with property values
+
+* @returns {object} - returns object for validation of the schema 
+
+*/
 
 //validate with Joi
 function validateDog(dog) {

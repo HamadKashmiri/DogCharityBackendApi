@@ -1,7 +1,22 @@
- const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const config = require('config');
 
+/**
+
+* Middleware function to decode jwt to check if its valid
+
+* @param {object} err - request object
+
+* @param {object} req - request object
+
+* @param {object} res - response object
+
+* @returns {function} - Next function returned to pass control to next middleware 
+
+*/
+
 function userAuth(req, res, next) {
+
     const jwToken = req.header('x-jwtoken');
     //401 is unauthenticated
     if (!jwToken) return res.status(401).send('No token provided');

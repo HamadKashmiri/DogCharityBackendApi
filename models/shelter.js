@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+/**
 
+* @class shelter
+
+* @param {object} schema - contains properties of shelter
+
+*/
 //schema for shelters
 const shelterSchema = new mongoose.Schema({
   name: { type: String, 
@@ -19,6 +25,16 @@ const shelterSchema = new mongoose.Schema({
 })
 // Make shelter model
 const Shelter = mongoose.model("Shelters", shelterSchema);
+
+/**
+
+* @function shelter validation
+
+* @param {object} shelter - passed user object with property values
+
+* @returns {object} - returns object for validation of the schema 
+
+*/
 
 //validate with Joi
 function validateShelter(shelter) {

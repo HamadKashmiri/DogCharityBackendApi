@@ -3,7 +3,15 @@ const Joi = require('joi');
 const passwordComplexity = require("joi-password-complexity");
 const config = require('config');
 const jwt = require('jsonwebtoken');
+/**
 
+* @class user
+
+* @param {object} schema - contains properties of user
+
+* @mixes {userSchema.methods}
+
+*/
 //schema for favourite
 const userSchema = new mongoose.Schema({
     name: {
@@ -33,7 +41,7 @@ const userSchema = new mongoose.Schema({
     }
       
 });
-
+/** @mixin */
 userSchema.methods.getToken = function() {
     //json web token created using id, with private key as 2nd argument 
     const jwToken = jwt.sign({ _id: this._id, role: this.role }, config.get('jwtPrivateKey'));
@@ -42,6 +50,16 @@ userSchema.methods.getToken = function() {
 
 // Make User model
 const User = mongoose.model("Users", userSchema);
+
+/**
+
+* @function user validation
+
+* @param {object} user - passed user object with property values
+
+* @returns {object} - returns object for validation of the schema 
+
+*/
 
 //validate with Joi
 function validateUser(user) {
