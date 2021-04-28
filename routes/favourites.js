@@ -129,7 +129,7 @@ router.post('/', userAuth, async (req, res) => {
 *       description: an authorization header
 *       required: true
 *       type: string     
-*     tags: [Dogs]
+*     tags: [Favourites]
 *     description: delete a favourite
 *     responses:
 *       '200':
